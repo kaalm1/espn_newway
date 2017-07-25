@@ -16,7 +16,7 @@ function render(html,into){
 
 
 function renderPlayers(){
-  $('body').on('click', 'tr', function(){
+  $('body').on('click', 'table.teams tr', function(){
     playersController.show(this)
   })
 }
@@ -25,8 +25,10 @@ function deletePlayer(){
   $('body').on('click','.delete-player', function(){
     let id = this.parentElement.id
     let player = Player.find(parseInt(id))
+    let teamId = player.teamId
+    let team = Team.find(parseInt(teamId))
     player.destroy()
-    playersController.show(this.parentElement)
+    render(playersController.playersHTML(team),'table.players tbody')
   })
 }
 
